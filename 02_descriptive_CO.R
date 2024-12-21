@@ -12,8 +12,8 @@ bland_devices <- correlation_devices %>%
 
 ggplot(bland_devices, aes(x = Mean, y = Difference)) +
   geom_point(alpha = 0.7, color = "blue") +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +  # Reference line
-  geom_smooth(method = "lm", se = FALSE, color = "black") +  # Add trend line
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +  
+  geom_smooth(method = "lm", se = FALSE, color = "black") +  
   labs(
     x = "Mean of ezb and ezf",
     y = "Difference (ezb - ezf)"
@@ -44,7 +44,7 @@ correlation_devices_long <- correlation_devices %>%
 
 # Time-series plot by garage name
 ggplot(correlation_devices_long, aes(x = Timestamp, y = CO_ppm, color = Device)) +
-  geom_line(size = 0.6, alpha = 1) +  # Line plot for both devices
+  geom_line(size = 0.6, alpha = 1) +  
   facet_wrap(~ Garage_name, labeller = as_labeller(custom_labels), scales = "free_x") +  
   labs(
     x = "Timestamp",
