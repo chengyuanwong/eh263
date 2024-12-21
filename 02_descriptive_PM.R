@@ -18,23 +18,20 @@ overall_precision <- mean((abs(aligned_data$MC_Device1 - aligned_data$MC_Device2
 overall_precision
 
 
-
-
-
 correlation_devices <- inner_join(df %>% rename(Device1_MC = MC), 
                              df_3003 %>% rename(Device2_MC = MC),
                              by = c("Timestamp", "Garage_name", "Level"))
 
 bland_devices <- correlation_devices %>%
   mutate(
-    Mean = (Device1_MC + Device2_MC) / 2,  # Mean of the two devices
-    Difference = Device1_MC - Device2_MC   # Difference between the devices
+    Mean = (Device1_MC + Device2_MC) / 2, 
+    Difference = Device1_MC - Device2_MC  
   )
 
 ggplot(bland_devices, aes(x = Mean, y = Difference)) +
   geom_point(alpha = 0.7, color = "blue") +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +  # Reference line
-  geom_smooth(method = "lm", se = FALSE, color = "black") +  # Add trend line
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +  
+  geom_smooth(method = "lm", se = FALSE, color = "black") + 
   labs(
     x = "Mean of 3001 and 3003",
     y = "Difference (3001 - 3003)"
@@ -73,7 +70,7 @@ correlation_devices_long <- correlation_devices %>%
                values_to = "MC")
 
 
-# Time-series plot with smoothing faceted by garage name
+# Time-series plot with smoothing 
 ggplot(correlation_devices_long, aes(x = Timestamp, y = MC, color = Device)) +
   geom_line(size = 0.2, alpha = 1) + 
   scale_y_continuous(limits = c(0, 40)) +
@@ -137,7 +134,7 @@ ggplot(merged_df, aes(x = factor(Level), y = MC, fill = factor(Level))) +
   scale_fill_brewer(palette = "Set3")
 
 
-# Calculate descriptive statistics stratified by floor 
+# Calculate descriptive statistics stratified by floor level
 descriptive_stats <- merged_df %>%
   group_by(Level) %>%
   summarize(
@@ -215,10 +212,5 @@ ggplot(fixed_effects, aes(x = Variable, y = Estimate)) +
     plot.tag = element_text(size = 16, face = "bold")  
   )
 
-
-
-
-
-# Precision calculation ---------------------------------------------------
 
 
