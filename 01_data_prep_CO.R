@@ -11,7 +11,7 @@ kingston_ezb <- read_xlsx("~/Documents/Rstudio/eh_263/Group Project/co_hobo/CO_F
                       skip = 1)
 
 
-# Function to clean and format the dataset, including creating a Timestamp column
+# Function to clean and format the dataset
 clean_co_dataset <- function(df, timestamp_format) {
   df_cleaned <- df[2:nrow(df), c(2, 3, 4, 6)]  # Assuming the first column is 'Date' and the second is 'Time'
   colnames(df_cleaned) <- c("Time", "Co_low", "Co_aux", "Co_high")
@@ -26,7 +26,7 @@ clean_co_dataset <- function(df, timestamp_format) {
                               (df_cleaned$Co_high - df_cleaned$Co_aux) * 2.42,
                               (df_cleaned$Co_low - df_cleaned$Co_aux) * 2.42)
   
-  # Create the Timestamp column in "2024-11-12 18:29:00" format
+  # Create the Timestamp column
   df_cleaned <- df_cleaned %>%
     mutate(
       Timestamp = as.POSIXct(paste(Time), format = timestamp_format, tz = "America/New_York")
@@ -110,7 +110,7 @@ kingston_ezf <- read_xlsx("~/Documents/Rstudio/eh_263/Group Project/co_hobo/CO_F
 
 
 
-# Clean each dataset and create the Timestamp column
+# Clean each dataset
 trilogy_ezf_cleaned <- clean_co_dataset(trilogy_ezf, "%Y-%m-%d %H:%M:%S")      
 city_place_ezf_cleaned <- clean_co_dataset(city_place_ezf, "%m/%d/%y %I:%M:%S %p")
 prudential_ezf_cleaned <- clean_co_dataset(prudential_ezf, "%Y-%m-%d %H:%M:%S")
